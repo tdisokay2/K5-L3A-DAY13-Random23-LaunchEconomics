@@ -5,6 +5,7 @@ Bản gốc chưa sửa nằm ở lab13_starter.py.
 """
 import math
 import sys
+from statistics import NormalDist
 import pandas as pd
 
 # Bảng giá GIẢ ĐỊNH của lab (không phải giá thật của nhà cung cấp nào)
@@ -44,6 +45,31 @@ def he_so_chi_phi_moi_viec_thanh_cong(p, k=None):
     """Chi phí mỗi việc thành công, tính bằng bội số của giá một lần chạy."""
     success = ti_le_thanh_cong(p, k)
     return so_lan_chay_ky_vong(p, k) / success
+
+
+def co_mau_hai_ty_le(p1, p2, alpha=0.05, power=0.8):
+    """Cỡ mẫu mỗi nhánh cho kiểm định hai tỷ lệ độc lập, làm tròn lên."""
+    if not 0 < p1 < p2 < 1:
+        raise ValueError('Require 0 < p1 < p2 < 1')
+    if not 0 < alpha < 1 or not 0 < power < 1:
+        raise ValueError('alpha and power must be in (0, 1)')
+    normal = NormalDist()
+    z_alpha = normal.inv_cdf(1 - alpha / 2)
+    z_power = normal.inv_cdf(power)
+    p_bar = (p1 + p2) / 2
+    numerator = (z_alpha * math.sqrt(2 * p_bar * (1 - p_bar))
+                 + z_power * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))) ** 2
+    return math.ceil(numerator / (p2 - p1) ** 2)
+
+
+def cong_suat_hai_ty_le(p1, p2, n_moi_nhanh, alpha=0.05):
+    """Xấp xỉ power hai phía theo hiệu ứng arcsine (Cohen h)."""
+    normal = NormalDist()
+    z_alpha = normal.inv_cdf(1 - alpha / 2)
+    h = 2 * math.asin(math.sqrt(p2)) - 2 * math.asin(math.sqrt(p1))
+    noncentrality = abs(h) * math.sqrt(n_moi_nhanh / 2)
+    return (normal.cdf(-z_alpha - noncentrality)
+            + normal.cdf(noncentrality - z_alpha))
 
 
 def kiem_tra_dap_an_biet_truoc():
@@ -199,6 +225,30 @@ if __name__ == '__main__':
           f'tong={b4_tong_thuc_te:,.0f}d cps={b4_cps_thuc_te:,.0f}d '
           f'({b4_cps_thuc_te / BASELINE:.2f}x baseline)')
 
-    # TODO CP4 · Nhiệm vụ D: cỡ mẫu.
-    #   from statsmodels.stats.proportion import proportion_effectsize
-    #   from statsmodels.stats.power import NormalIndPower
+    # D1 · Cỡ mẫu: baseline 70%, alpha 5%, power 80%, ICC 0,02.
+    baseline = 0.70
+    alpha = 0.05
+    power = 0.80
+    icc = 0.02
+    n_5pp = co_mau_hai_ty_le(baseline, baseline + 0.05, alpha, power)
+    de_m75 = 1 + (75 - 1) * icc
+    n_clustered_5pp = math.ceil(n_5pp * de_m75)
+    staff_per_arm_5pp = math.ceil(n_clustered_5pp / 75)
+    n_6pp = co_mau_hai_ty_le(baseline, baseline + 0.06, alpha, power)
+    staff_clusters = 20
+    max_eff_20_staff = staff_clusters / icc
+    effective_20_staff_m75 = staff_clusters * 75 / de_m75
+    max_eff_6_depots = 6 / icc
+    m_for_6pp = math.ceil(n_6pp * (1 - icc) / (staff_clusters - n_6pp * icc))
+    de_for_6pp = 1 + (m_for_6pp - 1) * icc
+    power_5pp_at_859 = cong_suat_hai_ty_le(baseline, baseline + 0.05, n_6pp, alpha)
+    print('D1 · Co mau moi nhanh')
+    print(f'a) Chia theo yeu cau, MDE 5 diem: {n_5pp:,}')
+    print(f'b) Nhan vien, m=75: DE={de_m75:.2f}; n={n_clustered_5pp:,}/nhanh; '
+          f'{staff_per_arm_5pp} nhan vien/nhanh ({staff_per_arm_5pp * 2} tong, khong du 40)')
+    print(f'c) 20 nhan vien/nhanh: gioi han tren c/ICC={max_eff_20_staff:,.0f}; '
+          f'neu m=75 thi n_hieu_dung={effective_20_staff_m75:,.1f}; deu < {n_5pp:,}')
+    print(f'd) 6 depot/nhanh: gioi han tren c/ICC={max_eff_6_depots:,.0f}')
+    print(f'e) MDE 6 diem: n={n_6pp:,}/nhanh; 20 nhan vien can m={m_for_6pp} '
+          f'yeu cau/nhan vien (DE={de_for_6pp:.2f}); neu MDE that 5 diem, '
+          f'power~{power_5pp_at_859:.2f}')

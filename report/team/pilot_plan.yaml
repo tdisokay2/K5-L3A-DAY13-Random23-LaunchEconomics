@@ -3,49 +3,55 @@
 # Kiểm tra đọc được: python -c "import yaml; yaml.safe_load(open('../report/team/pilot_plan.yaml'))"
 #
 # D1 · Cỡ mẫu (baseline 0,70; mục tiêu +5 điểm; alpha 0,05; power 0,8; ICC 0,02)
-#   a) Chia theo yêu cầu:
-#   b) Theo nhân viên, m = 75:
-#   c) 20 nhân viên mỗi nhóm:
-#   d) 6 depot mỗi nhóm:
-#   e) Mức chênh 6 điểm (859 mỗi nhóm), 20 nhân viên mỗi nhóm:
+#   a) Theo yêu cầu, MDE 5 điểm: 1.251 yêu cầu/nhóm.
+#   b) Theo nhân viên, m=75: DE=2,48; 3.103 yêu cầu/nhóm, cần 42 người/nhóm (84 > 40).
+#   c) 20 nhân viên/nhóm: trần hiệu dụng c/ICC=1.000 < 1.251; nếu m=75 thì chỉ khoảng 605.
+#   d) 6 depot/nhóm: trần hiệu dụng c/ICC=300.
+#   e) MDE 6 điểm: 859 hiệu dụng/nhóm; 20 người/nhóm cần m=299 yêu cầu/người, DE=6,96.
+#      Nếu tác động thật chỉ 5 điểm, power tại n=859 còn khoảng 0,64.
 #
 # D2 · Năm câu kiểm tra "tách được tác động" với cách chia đã chọn (mỗi câu một dòng):
-#   1. Đối chứng chạy cùng thời gian:
-#   2. Chia ngẫu nhiên hay do người chọn:
-#   3. Ảnh hưởng gián tiếp và cách giảm:
-#   4. Chỉ số chính, ngưỡng, ngày quyết định đã viết trước:
-#   5. Ít nhất 20 cụm mỗi nhóm:
+#   1. Có 20 nhân viên đối chứng cùng tuần và depot với 20 người can thiệp.
+#   2. Bốc thăm bằng code với seed ghi trước, phân tầng theo depot.
+#   3. Có thể chia sẻ câu trả lời; giới hạn quyền theo staff_id và log lượt mở trợ lý.
+#   4. Chốt trước metric, ngưỡng, luật dừng và ngày quyết định 2027-01-05.
+#   5. Có 20 cụm nhân viên ở mỗi nhánh.
 #
-# Đánh đổi đã chấp nhận (nếu cách chia chưa đạt cả hai điều kiện):
+# Đánh đổi: không đủ lực thống kê cho MDE 5 điểm; chấp nhận MDE 6 điểm, power khoảng 0,64 nếu hiệu quả thật chỉ là 5 điểm.
 #
-# Tỉ lệ mo_lai_trong_7_ngay hiện tại và ngưỡng an toàn đã chọn:
+# Tỉ lệ mở lại hiện tại là 4,25% (51/1.200); riêng phạm vi pilot là 3,97%.
+# Ngưỡng an toàn: chênh treatment-control tối đa 2 điểm phần trăm và trần tuyệt đối 6%.
 
 pilot:
-  owner: "?"                      # một người có tên vai trò, không ghi "cả đội"
-  scope: "?"                      # loại yêu cầu nào, depot nào; dựa vào kết quả A3
+  owner: "Giám đốc vận hành LogiX-VN" # một vai trò có quyền dừng pilot
+  scope: "Chỉ noi_dia và hang_nang; loại quoc_te (22.515 đ, 1,88x baseline) và doi_tac (điều khoản riêng) bị loại khỏi pilot, số liệu CPS simulated"
   assignment:
-    unit: "?"                     # request | staff | depot
+    unit: "staff"                 # ngẫu nhiên theo nhân viên, phân tầng theo depot
     control_share: 0.5
     randomized: true
-  rollout: [0.10, 0.25, 0.50]     # mỗi bước một tuần
+  rollout: [0.10, 0.25, 0.50]     # 4 -> 10 -> 20 người can thiệp; efficacy chỉ đánh giá ở bước 0.50
   primary_metric:
     name: dong_trong_24h_khong_mo_lai_7_ngay
     baseline: 0.70
-    mde: 0.05
+    mde: 0.06                    # đánh đổi chấp nhận được do giới hạn 40 nhân viên
     alpha: 0.05
     power: 0.80
-    n_per_arm: "?"
-    design_effect: "?"            # 1 nếu chia theo yêu cầu
-    clusters_per_arm: "?"         # để trống nếu chia theo yêu cầu
+    n_per_arm: 859                # cỡ mẫu hiệu dụng cần cho MDE 6 điểm
+    design_effect: 6.96           # m=299 yêu cầu/nhân viên, ICC=0,02
+    clusters_per_arm: 20
   identifiability:
-    concurrent_control: "?"
-    spillover_risk: "?"
-    predeclared: "?"
+    concurrent_control: "20 nhân viên đối chứng chạy cùng 20 nhân viên can thiệp trong cùng 6 depot và cùng thời gian"
+    spillover_risk: "Nhân viên trong depot có thể chia sẻ câu trả lời; giới hạn quyền truy cập theo staff_id và ghi log lượt mở trợ lý"
+    predeclared: "Metric, MDE, ngưỡng dừng, cách phân tầng và ngày quyết định 2027-01-05 được chốt trước khi bắt đầu"
   stop_rules:
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-    - "NẾU ? TRONG ? THÌ ? KHÔNG THÌ ?"
-  interim_looks: "chỉ kiểm tra chỉ số an toàn"
-  rollback: "?"                   # ai bấm, mất bao lâu, khách được phục vụ bằng gì
-  decision_date: "?"
-  simulated_inputs: ["?"]         # liệt kê mọi con số giả lập đã dùng
+    - "NẾU tỷ lệ mở lại 7 ngày ở nhánh can thiệp cao hơn đối chứng từ 2 điểm phần trăm hoặc vượt 6%, hoặc phát hiện ít nhất 1 ca hoàn trùng TRONG cửa sổ 3 ngày THÌ Giám đốc vận hành tắt trợ lý trong 30 phút KHÔNG THÌ giữ nguyên giai đoạn và không mở rộng trước lần kiểm tra an toàn kế tiếp"
+    - "NẾU chi phí mỗi việc thành công vượt 8.000 đ TRONG 2 tuần liên tiếp THÌ PM thu hẹp về noi_dia và giới hạn 2 lần chạy KHÔNG THÌ chưa mở hang_nang và chưa tăng rollout"
+    - "NẾU tỷ lệ bỏ qua gợi ý vượt 40% TRONG 1 tuần THÌ Trưởng nhóm CSKH phỏng vấn 5 nhân viên trong 3 ngày KHÔNG THÌ không chuyển sang bước rollout tiếp"
+  interim_looks: "Kiểm tra an toàn hằng ngày; không xem hiệu quả giữa kỳ để kết luận; chỉ đánh giá metric chính tại bước 0.50 khi đạt đủ 859 mẫu hiệu dụng mỗi nhánh"
+  rollback: "Giám đốc vận hành bật cờ tắt trợ lý, hiệu lực trong 30 phút; chuyển mọi yêu cầu sang quy trình nhân viên tự làm"
+  decision_date: "2027-01-05"
+  simulated_inputs:
+    - "Mẫu lab giả lập 1.200 yêu cầu và 1.624 lần chạy; tỷ lệ mở lại 4,25% toàn mẫu, 3,97% trong phạm vi noi_dia + hang_nang"
+    - "CPS theo loại: noi_dia 2.696 đ, hang_nang 8.221 đ, quoc_te 22.515 đ, doi_tac 10.215 đ; chi phí có thời gian nhân viên là simulated"
+    - "Khối lượng 45.000 yêu cầu/tháng; baseline metric 0,70; ICC 0,02; alpha 0,05; power 0,80"
+    - "MDE 6 điểm phần trăm, 20 cụm mỗi nhánh, 299 yêu cầu mỗi nhân viên; ngưỡng dừng chi phí 8.000 đ và ngưỡng sử dụng 40% là giả định thiết kế"
