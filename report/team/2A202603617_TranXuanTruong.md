@@ -4,7 +4,7 @@
 
 - Họ tên: Trần Xuân Trường
 - MSSV: 2A202603617
-- Email: 2A202603617@student.vinuni.edu.vn
+- Email: truongxuan2834@gmail.com
 - Vai trong nhóm: Người gắn nhãn 2 kiêm giữ hồ sơ (TV4)
 - Nhánh làm việc: `truong`
 
