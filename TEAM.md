@@ -2,8 +2,8 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm: Random23 (Nhóm 23)
-- Lớp: L3A (AI20K K5)
+- Tên nhóm: Random23
+- Lớp: L3A
 - Repo nhóm: `K5-L3A-DAY13-Random23-LaunchEconomics`
 - URL repo, nhánh nộp, commit chốt: `main` (tổng hợp qua PR từ 4 nhánh cá nhân: `thanhthuy`, `manh`, `duongnguyen`, `truong`)
 
@@ -42,4 +42,4 @@ Bốn vai của lab:
 ### Trần Xuân Trường — Người gắn nhãn 2 kiêm Giữ hồ sơ (TV4)
 - **Phần việc phụ trách:** Gắn nhãn 20 ca lỗi độc lập bộ 2; chủ trì `report/team/chi_so.md`, tổng hợp `report/team/ho_so_launch_v0.md`, `report/team/group_report.md` và `TEAM.md`.
 - **Đóng góp cụ thể:** Xây dựng danh mục 11 telemetry events có `trace_id` liên kết bảng lỗi; thiết lập 3 rủi ro kinh tế lớn; hoàn thiện hồ sơ Launch v0 1 trang đủ 7 mục với đề xuất Go có điều kiện bảo vệ trước hội đồng Gate 2a.
-- **Bằng chứng:** Các file `chi_so.md`, `ho_so_launch_v0.md`, `group_report.md`, `TEAM.md`, báo cáo cá nhân trên nhánh `truong`.
+- **Bằng chứng:** Các file `report/team/chi_so.md`, `report/team/ho_so_launch_v0.md`, `report/team/group_report.md`, `TEAM.md` trên nhánh `truong`.
