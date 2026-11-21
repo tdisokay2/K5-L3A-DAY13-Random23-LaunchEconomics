@@ -39,10 +39,10 @@ Báo cáo ngắn gọn tổng hợp quá trình định giá agent và xây dự
 ## 6. Tổng hợp đóng góp
 
 Nhóm làm việc song song theo 4 nhánh git:
-- **TV1 (nhánh `code`):** Triển khai code A1–A4 trong `lab13.py`, ba phép thử đạt 100%.
-- **TV2 (nhánh `economics`):** Tính toán đối chiếu, chạy độ nhạy B1–B4, hoàn thiện `bang_chi_phi.md`.
-- **TV3 (nhánh `pilot-errors`):** Chủ trì gắn nhãn bộ 1, tổng hợp `bang_loi.md`, hoàn thiện `pilot_plan.yaml` và `phieu_cham.md`.
-- **TV4 (nhánh `reports`):** Gắn nhãn bộ 2; chủ trì `chi_so.md`, chốt `ho_so_launch_v0.md`, tổng hợp `group_report.md` và `TEAM.md`.
+- **TV1 (nhánh `code` - `thanhthuy` ):** Triển khai code A1–A4 trong `lab13.py`, ba phép thử đạt 100%.
+- **TV2 (nhánh `economics` - `manh`):** Tính toán đối chiếu, chạy độ nhạy B1–B4, hoàn thiện `bang_chi_phi.md`.
+- **TV3 (nhánh `pilot-errors` - `duongnguyen`):** Chủ trì gắn nhãn bộ 1, tổng hợp `bang_loi.md`, hoàn thiện `pilot_plan.yaml` và `phieu_cham.md`.
+- **TV4 (nhánh `reports` - `truong`):** Gắn nhãn bộ 2; chủ trì `chi_so.md`, chốt `ho_so_launch_v0.md`, tổng hợp `group_report.md` và `TEAM.md`.
 
 ## 7. Hạn chế và hướng cải thiện
 
