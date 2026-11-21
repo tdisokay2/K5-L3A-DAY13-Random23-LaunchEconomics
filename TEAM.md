@@ -11,10 +11,10 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò chính | Nhánh Git |
 | --: | ------ | ---- | ----- | ------ | ------------- | --------- |
-|   1 | Nguyễn Thị Thanh Thúy | 2A202603523 | 2A202603523@student.vinuni.edu.vn | thanhthuy | Người viết code (CP1 A1–A4; kiểm tra code sau giải lao) | `thanhthuy` |
-|   2 | Hồ Đức Mạnh | 2A202603609 | 2A202603609@student.vinuni.edu.vn | manh | Người kiểm số (Tính tay đối chiếu; B1–B4; tiếp quản code D1) | `manh` |
-|   3 | Nguyễn Triều Dương | 2A202603524 | 2A202603524@student.vinuni.edu.vn | duongnguyen | Người gắn nhãn 1 (Chủ trì CP3 `bang_loi.md`, CP4 `pilot_plan.yaml`, `phieu_cham.md`) | `duongnguyen` |
-|   4 | Trần Xuân Trường | 2A202603617 | 2A202603617@student.vinuni.edu.vn | truong | Người gắn nhãn 2 kiêm giữ hồ sơ (Chủ trì `chi_so.md`, `ho_so_launch_v0.md`, `group_report.md`) | `truong` |
+|   1 | Nguyễn Thị Thanh Thúy | 2A202603523 | thanhthuy02072004@gmail.com | Ththuy | Người viết code (CP1 A1–A4; kiểm tra code sau giải lao) | `thanhthuy` |
+|   2 | Hồ Đức Mạnh | 2A202603609 | hoducmanh822005@gmail.com | hoducmanhtemperature | Người kiểm số (Tính tay đối chiếu; B1–B4; tiếp quản code D1) | `manh` |
+|   3 | Nguyễn Triều Dương | 2A202603524 | victorytop54321@gmail.com |  tdisokay2 | Người gắn nhãn 1 (Chủ trì CP3 `bang_loi.md`, CP4 `pilot_plan.yaml`, `phieu_cham.md`) | `duongnguyen` |
+|   4 | Trần Xuân Trường | 2A202603617 | truongxuan2834@gmail.com | XuanTruong28 | Người gắn nhãn 2 kiêm giữ hồ sơ (Chủ trì `chi_so.md`, `ho_so_launch_v0.md`, `group_report.md`) | `truong` |
 
 Bốn vai của lab:
 - **Người viết code (Nguyễn Thị Thanh Thúy):** Viết và chạy `src/lab13.py` (A1–A4, B1–B4), kiểm tra môi trường đa nền tảng.
